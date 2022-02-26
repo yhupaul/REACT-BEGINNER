@@ -9,11 +9,11 @@
 <!-- those two url are for react -->
 <script type="text/babel">
   const root = document.getElementById("root");
-  function Btn(props) {
-    // props are obj from Btn's values 
-    console.log(props)  
+  function Btn({text, changeValue}) {
+    console.log(text)
     return (
       <button
+        onClick={changeValue  }
         style={{
           backgroundColor: "tomato",
           color: "white",
@@ -22,16 +22,18 @@
           borderRadius: 10,
         }}
       >
-          {props.text}
+          {text}
         </button>
         );
   }
-
+  const MemorizedBtn = React.memo(Btn); //only changing value will be redered
   function App() {
+    const [value, setValue] = React.useState("Save Changes");
+    const chageValue = () => setValue("Revert Changes");
     return (
     <div>
-      <Btn text="Save Changes"/>
-      <Btn text="Continue"/>
+      <MemorizedBtn text={value} changeValue={chageValue}/>
+      <MemorizedBtn text="Continue"/>
     </div>
     );
   };                  
